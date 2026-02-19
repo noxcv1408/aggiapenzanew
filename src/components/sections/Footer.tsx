@@ -10,8 +10,8 @@ const Footer = () => (
         </span>
       </div>
       <div className="flex gap-6 text-xs text-muted-foreground">
-        <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
-        <a href="#" className="hover:text-foreground transition-colors">Cookie Policy</a>
+        <a href="/privacy-policy" className="hover:text-foreground transition-colors">Privacy Policy</a>
+        <a href="/cookie-policy" className="hover:text-foreground transition-colors">Cookie Policy</a>
       </div>
     </div>
     {/* Radar sweep */}
