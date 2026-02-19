@@ -47,7 +47,9 @@ const Hero = () => (
         Scopri i servizi
       </a>
       <a
-        href="#contatti"
+        href="https://wa.me/393314054492"
+        target="_blank"
+        rel="noopener noreferrer"
         className="rounded-full bg-foreground px-8 py-3 text-sm font-medium text-primary-foreground transition-all hover:bg-foreground/90"
       >
         Contattaci
