@@ -18,12 +18,15 @@ const ParticleBackground = () => {
     ];
 
     const resize = () => {
+      // Viewport only — canvas is fixed, full scrollHeight wastes memory & CPU
       canvas.width = window.innerWidth;
-      canvas.height = document.documentElement.scrollHeight;
+      canvas.height = window.innerHeight;
+      initParticles();
     };
 
     const initParticles = () => {
-      particles = Array.from({ length: 200 }, () => ({
+      // Reduced from 200 to 120 — visually identical, 40% less work per frame
+      particles = Array.from({ length: 120 }, () => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         vx: (Math.random() - 0.5) * 0.3,
@@ -66,25 +69,31 @@ const ParticleBackground = () => {
       animationId = requestAnimationFrame(draw);
     };
 
+    // Pause RAF when tab is hidden — saves CPU & battery
+    const handleVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animationId);
+      } else {
+        draw();
+      }
+    };
+
+    const handleResize = () => resize();
+
     resize();
-    initParticles();
     draw();
 
-    window.addEventListener("resize", () => {
-      resize();
-      initParticles();
-    });
+    window.addEventListener("resize", handleResize);
+    document.addEventListener("visibilitychange", handleVisibility);
 
-    return () => cancelAnimationFrame(animationId);
+    return () => {
+      cancelAnimationFrame(animationId);
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-0"
-      style={{ width: "100%", height: "100%" }}
-    />
-  );
+  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-0" />;
 };
 
 export default ParticleBackground;

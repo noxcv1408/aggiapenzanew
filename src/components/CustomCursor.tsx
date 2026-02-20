@@ -63,7 +63,9 @@ const CustomCursor = () => {
         }}
       />
       <div
-        className="pointer-events-none fixed z-[9998] rounded-full border border-primary transition-all duration-200"
+        className={`pointer-events-none fixed z-[9998] rounded-full border border-primary transition-all duration-300 ${
+          hovering ? "" : "cursor-breathe"
+        }`}
         style={{
           width: hovering ? 48 : 32,
           height: hovering ? 48 : 32,
